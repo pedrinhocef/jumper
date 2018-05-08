@@ -1,4 +1,4 @@
-package com.pedrosoares.jumper.elements;
+package com.pedrosoares.jumper.graphic;
 
 import android.graphics.Paint;
 
@@ -8,5 +8,11 @@ public class Cores {
         Paint vermelho = new Paint();
         vermelho.setColor(0xFFFF0000);
         return vermelho;
+    }
+
+    public static Paint getCorDoCano() {
+        Paint verde = new Paint();
+        verde.setColor(0xFF00FF00);
+        return verde;
     }
 }

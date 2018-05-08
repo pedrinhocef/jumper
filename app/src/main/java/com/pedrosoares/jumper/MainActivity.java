@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
         FrameLayout container = findViewById(R.id.container);
 
         game = new Game(this);
-
         container.addView(game);
     }
 
