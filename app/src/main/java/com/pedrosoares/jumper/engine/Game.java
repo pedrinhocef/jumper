@@ -11,28 +11,29 @@ import android.view.View;
 
 import com.pedrosoares.jumper.R;
 import com.pedrosoares.jumper.elements.Cano;
+import com.pedrosoares.jumper.elements.Canos;
 import com.pedrosoares.jumper.elements.Passaro;
 import com.pedrosoares.jumper.graphic.Tela;
 
 public class Game extends SurfaceView implements Runnable, View.OnTouchListener {
 
     private final Tela tela;
-    private final Cano cano;
     private boolean isRunning = true;
     private final SurfaceHolder holder = getHolder();
     private Passaro passaro;
     private Bitmap background;
+    private Canos canos;
 
     public Game(Context context) {
         super(context);
         this.tela = new Tela(context);
-        this.cano = new Cano(tela, 500);
         setOnTouchListener(this);
         inicializaElementos();
     }
 
     private void inicializaElementos() {
-       this.passaro = new Passaro();
+       this.passaro = new Passaro(tela);
+       this.canos = new Canos(tela);
        Bitmap back = BitmapFactory.decodeResource(getResources(),R.drawable.background);
        this.background = Bitmap.createScaledBitmap(back, back.getWidth(), tela.getAltura(), false);
 
@@ -48,8 +49,8 @@ public class Game extends SurfaceView implements Runnable, View.OnTouchListener 
             canvas.drawBitmap(background, 0, 0, null);
             passaro.desenhaNoCanvas(canvas);
             passaro.cai();
-            cano.desenhaNoCanvas(canvas);
-            cano.move();
+            canos.desenhaNo(canvas);
+            canos.move();
 
             holder.unlockCanvasAndPost(canvas);
         }

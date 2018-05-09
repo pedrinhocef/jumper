@@ -21,7 +21,7 @@ public class Cano {
         this.alturaDoCanoInferior = tela.getAltura() - TAMANHO_DO_CANO;
     }
 
-    public void desenhaNoCanvas(Canvas canvas) {
+    public void desenhaNo(Canvas canvas) {
         desenhaCanoInferiorNo(canvas);
     }
 

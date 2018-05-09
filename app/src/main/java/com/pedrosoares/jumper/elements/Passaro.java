@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.pedrosoares.jumper.graphic.Cores;
+import com.pedrosoares.jumper.graphic.Tela;
 
 public class Passaro {
 
@@ -11,8 +12,10 @@ public class Passaro {
     private static final int RAIO = 50;
     private static final Paint VERMELHA = Cores.getCorDoPassaro();
     private int altura;
+    private Tela tela;
 
-    public Passaro() {
+    public Passaro(Tela tela) {
+        this.tela = tela;
         this.altura = 100;
     }
 
@@ -21,10 +24,17 @@ public class Passaro {
     }
 
     public void cai() {
-        this.altura += 5;
+        boolean chegouNoChao = altura + RAIO > tela.getAltura();
+        if (!chegouNoChao) {
+            this.altura += 5;
+        }
     }
 
     public void pula() {
-        this.altura -= 150;
+        int bordaSuperior = altura - RAIO;
+        if (bordaSuperior > 0) {
+            this.altura -= 150;
+        }
     }
+
 }
