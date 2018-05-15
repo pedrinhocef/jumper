@@ -8,8 +8,8 @@ import com.pedrosoares.jumper.graphic.Tela;
 
 public class Passaro {
 
-    private static final int X = 100;
-    private static final int RAIO = 50;
+    public static final int X = 350;
+    public static final int RAIO = 50;
     private static final Paint VERMELHA = Cores.getCorDoPassaro();
     private int altura;
     private Tela tela;
@@ -37,4 +37,7 @@ public class Passaro {
         }
     }
 
+    public int getAltura() {
+        return this.altura;
+    }
 }

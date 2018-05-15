@@ -6,14 +6,19 @@ import com.pedrosoares.jumper.graphic.Tela;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 public class Canos {
 
     private static final int QUANTIDADE_DE_CANOS = 5;
     private static final int DISTANCIA_ENTRE_CANOS = 250;
     private final List<Cano> canos = new ArrayList<>();
+    private Tela tela;
+    private Pontuacao pontuacao;
 
-    public Canos(Tela tela) {
+    public Canos(Tela tela, Pontuacao pontuacao) {
+        this.tela = tela;
+        this.pontuacao = pontuacao;
         int posicaoInicial = 500;
 
         for (int i = 0; i < QUANTIDADE_DE_CANOS; i++) {
@@ -30,9 +35,36 @@ public class Canos {
     }
 
     public void move() {
-        for (Cano cano : canos) {
+        ListIterator<Cano> iterator = canos.listIterator();
+        while(iterator.hasNext()) {
+            Cano cano = iterator.next();
             cano.move();
+
+            if(cano.saiuDaTela()) {
+                pontuacao.aumenta();
+                iterator.remove();
+                Cano outroCano = new Cano(tela, getMaximo() + DISTANCIA_ENTRE_CANOS);
+                iterator.add(outroCano);
+            }
         }
     }
 
+    private int getMaximo() {
+        int maximo = 0;
+        for(Cano cano : canos) {
+            maximo = Math.max(cano.getPosicao(), maximo);
+        }
+        return maximo;
+    }
+
+    public boolean temColisaoCom(Passaro passaro) {
+
+        for (Cano cano : canos) {
+            if (cano.temColisaoHorizontalCom(passaro)
+                    && cano.temColisaoVerticalCom(passaro)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

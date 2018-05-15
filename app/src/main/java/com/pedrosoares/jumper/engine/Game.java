@@ -10,9 +10,10 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import com.pedrosoares.jumper.R;
-import com.pedrosoares.jumper.elements.Cano;
 import com.pedrosoares.jumper.elements.Canos;
+import com.pedrosoares.jumper.elements.GameOver;
 import com.pedrosoares.jumper.elements.Passaro;
+import com.pedrosoares.jumper.elements.Pontuacao;
 import com.pedrosoares.jumper.graphic.Tela;
 
 public class Game extends SurfaceView implements Runnable, View.OnTouchListener {
@@ -23,19 +24,21 @@ public class Game extends SurfaceView implements Runnable, View.OnTouchListener 
     private Passaro passaro;
     private Bitmap background;
     private Canos canos;
+    private Pontuacao pontuacao;
 
     public Game(Context context) {
         super(context);
-        this.tela = new Tela(context);
+        tela = new Tela(context);
         setOnTouchListener(this);
         inicializaElementos();
     }
 
     private void inicializaElementos() {
-       this.passaro = new Passaro(tela);
-       this.canos = new Canos(tela);
-       Bitmap back = BitmapFactory.decodeResource(getResources(),R.drawable.background);
-       this.background = Bitmap.createScaledBitmap(back, back.getWidth(), tela.getAltura(), false);
+        this.pontuacao = new Pontuacao();
+        passaro = new Passaro(tela);
+        canos = new Canos(tela, pontuacao);
+        Bitmap back = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+        background = Bitmap.createScaledBitmap(back, back.getWidth(), tela.getAltura(), false);
 
     }
 
@@ -49,8 +52,16 @@ public class Game extends SurfaceView implements Runnable, View.OnTouchListener 
             canvas.drawBitmap(background, 0, 0, null);
             passaro.desenhaNoCanvas(canvas);
             passaro.cai();
+
             canos.desenhaNo(canvas);
             canos.move();
+
+            pontuacao.desenhaNo(canvas);
+
+            if(new VerificadorDeColisao(passaro, canos).temColisao()){
+                new GameOver(tela).desenhaNo(canvas);
+                isRunning = false;
+            }
 
             holder.unlockCanvasAndPost(canvas);
         }
