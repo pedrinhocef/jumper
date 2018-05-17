@@ -1,5 +1,6 @@
 package com.pedrosoares.jumper.elements;
 
+import android.content.Context;
 import android.graphics.Canvas;
 
 import com.pedrosoares.jumper.graphic.Tela;
@@ -15,15 +16,17 @@ public class Canos {
     private final List<Cano> canos = new ArrayList<>();
     private Tela tela;
     private Pontuacao pontuacao;
+    private Context context;
 
-    public Canos(Tela tela, Pontuacao pontuacao) {
+    public Canos(Tela tela, Pontuacao pontuacao, Context context) {
         this.tela = tela;
         this.pontuacao = pontuacao;
+        this.context = context;
         int posicaoInicial = 500;
 
         for (int i = 0; i < QUANTIDADE_DE_CANOS; i++) {
             posicaoInicial += DISTANCIA_ENTRE_CANOS;
-            canos.add(new Cano(tela, posicaoInicial));
+            canos.add(new Cano(tela, posicaoInicial, context));
         }
 
     }
@@ -43,7 +46,7 @@ public class Canos {
             if(cano.saiuDaTela()) {
                 pontuacao.aumenta();
                 iterator.remove();
-                Cano outroCano = new Cano(tela, getMaximo() + DISTANCIA_ENTRE_CANOS);
+                Cano outroCano = new Cano(tela, getMaximo() + DISTANCIA_ENTRE_CANOS, context);
                 iterator.add(outroCano);
             }
         }
