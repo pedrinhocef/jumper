@@ -12,8 +12,8 @@ import com.pedrosoares.jumper.graphic.Tela;
 
 public class Cano {
 
-    private static final int TAMANHO_DO_CANO = 250;
-    private static final int LARGURA_DO_CANO = 100;
+    private static final int TAMANHO_DO_CANO = 450;
+    private static final int LARGURA_DO_CANO = 120;
     private final int alturaDoCanoSuperior;
     private final Bitmap canoInferior;
     private final Bitmap canoSuperior;
@@ -35,7 +35,7 @@ public class Cano {
     }
 
     private int valorAleatorio() {
-        return (int) (Math.random() * 150);
+        return (int) (Math.random() * 250);
     }
 
     public void desenhaNo(Canvas canvas) {
@@ -54,7 +54,7 @@ public class Cano {
     }
 
     public void move() {
-        this.posicao -= 1;
+        this.posicao -= 2;
     }
 
     public boolean saiuDaTela() {

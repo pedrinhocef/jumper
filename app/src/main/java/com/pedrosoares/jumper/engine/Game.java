@@ -19,6 +19,7 @@ import com.pedrosoares.jumper.graphic.Tela;
 public class Game extends SurfaceView implements Runnable, View.OnTouchListener {
 
     private final Tela tela;
+    private final Som som;
     private boolean isRunning = true;
     private final SurfaceHolder holder = getHolder();
     private Passaro passaro;
@@ -30,14 +31,15 @@ public class Game extends SurfaceView implements Runnable, View.OnTouchListener 
     public Game(Context context) {
         super(context);
         this.context = context;
+        som = new Som(context);
         tela = new Tela(context);
         setOnTouchListener(this);
         inicializaElementos();
     }
 
     private void inicializaElementos() {
-        this.pontuacao = new Pontuacao();
-        passaro = new Passaro(tela, context);
+        this.pontuacao = new Pontuacao(som);
+        passaro = new Passaro(tela, context, som);
         canos = new Canos(tela, pontuacao, context);
         Bitmap back = BitmapFactory.decodeResource(getResources(), R.drawable.background);
         background = Bitmap.createScaledBitmap(back, back.getWidth(), tela.getAltura(), false);
@@ -62,6 +64,7 @@ public class Game extends SurfaceView implements Runnable, View.OnTouchListener 
 
             if(new VerificadorDeColisao(passaro, canos).temColisao()){
                 new GameOver(tela).desenhaNo(canvas);
+                som.play(Som.COLISAO);
                 isRunning = false;
             }
 

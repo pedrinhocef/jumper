@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.pedrosoares.jumper.R;
+import com.pedrosoares.jumper.engine.Som;
 import com.pedrosoares.jumper.graphic.Cores;
 import com.pedrosoares.jumper.graphic.Tela;
 
@@ -19,9 +20,11 @@ public class Passaro {
     private int altura;
     private Tela tela;
     private Context context;
+    private Som som;
 
-    public Passaro(Tela tela, Context context) {
+    public Passaro(Tela tela, Context context, Som som) {
         this.tela = tela;
+        this.som = som;
         this.context = context;
         this.altura = 100;
         Bitmap bp = BitmapFactory.decodeResource(context.getResources(), R.drawable.passaro);
@@ -43,6 +46,7 @@ public class Passaro {
     public void pula() {
         int bordaSuperior = altura - RAIO;
         if (bordaSuperior > 0) {
+            som.play(Som.PULO);
             this.altura -= 150;
         }
     }
